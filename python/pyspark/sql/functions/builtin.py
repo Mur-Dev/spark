@@ -14847,6 +14847,10 @@ def concat_ws(sep: str, *cols: "ColumnOrName") -> Column:
     --------
     :meth:`pyspark.sql.functions.concat`
 
+    Notes
+    -----
+    Input strings which are null are skipped.
+
     Examples
     --------
     >>> from pyspark.sql import functions as sf
@@ -14857,6 +14861,13 @@ def concat_ws(sep: str, *cols: "ColumnOrName") -> Column:
     +----+---+-----------------------+
     |abcd|123|           abcd-123-xyz|
     +----+---+-----------------------+
+
+    >>> df.select("*", sf.concat_ws("-", df.s, "d", sf.lit(None), sf.lit("xyz"))).show()
+    +----+---+-----------------------------+
+    |   s|  d|concat_ws(-, s, d, NULL, xyz)|
+    +----+---+-----------------------------+
+    |abcd|123|                 abcd-123-xyz|
+    +----+---+-----------------------------+
     """
     from pyspark.sql.classic.column import _to_seq, _to_java_column
 
