@@ -6820,7 +6820,7 @@ def coalesce(*cols: "ColumnOrName") -> Column:
     +----+----+
     |NULL|NULL|
     |   1|NULL|
-    |NULL|   2|
+    |NULL|NULL|
     +----+----+
 
     >>> df.select('*', sf.coalesce("a", df["b"])).show()
